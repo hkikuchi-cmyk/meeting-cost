@@ -93,16 +93,16 @@
 
     <div class="result" aria-live="polite">
       <div class="label">合計コスト</div>
-      <div class="total" id="total">¥25,000</div>
-      <div class="detail" id="detail">5人 × 1時間 × ¥5,000</div>
+      <div class="total" id="total">25,000円</div>
+      <div class="detail" id="detail">5人 × 1時間 × 5,000円</div>
     </div>
   </div>
 </main>
 
 <script>
   const $ = (id) => document.getElementById(id);
-  const yen = new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 0 });
   const num = new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 2 });
+  const yen = (value) => `${new Intl.NumberFormat("ja-JP", { maximumFractionDigits: 0 }).format(value)}円`;
 
   function calc() {
     const people = parseFloat($("people").value);
@@ -124,8 +124,8 @@
     }
 
     $("error").textContent = "";
-    $("total").textContent = yen.format(people * hours * rate);
-    $("detail").textContent = `${num.format(people)}人 × ${num.format(hours)}時間 × ${yen.format(rate)}`;
+    $("total").textContent = yen(people * hours * rate);
+    $("detail").textContent = `${num.format(people)}人 × ${num.format(hours)}時間 × ${yen(rate)}`;
   }
 
   ["people", "hours", "rate"].forEach((id) => $(id).addEventListener("input", calc));
